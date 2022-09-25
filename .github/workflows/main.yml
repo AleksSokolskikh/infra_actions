@@ -67,5 +67,5 @@ jobs:
       id: notify
       with:
         slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-        slack-channel: C0446BSPKS5
+        slack-channel: D043M4ZKMSS
         slack-text: ${{ github.workflow }} успешно выполнен!
