@@ -58,13 +58,14 @@ jobs:
           sudo docker pull sokolskikh/infra_actions
           sudo docker stop $(sudo docker ps -a -q)
           sudo docker run --rm -d -p 5000:5000 sokolskikh/infra_actions
-  send_message:
-  runs-on: ubuntu-latest
-  needs: deploy
-  steps:
-  - name: send message
-    uses: appleboy/telegram-action@master
-    with:
-      to: ${{ secrets.TELEGRAM_TO }}
-      token: ${{ secrets.TELEGRAM_TOKEN }}
-      message: ${{ github.workflow }} успешно выполнен!
+  slack-notifications:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+    - name: Send message to Slack API
+      uses: archive/github-actions-slack@v2.0.0
+      id: notify
+      with:
+        slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+        slack-channel: C0446BSPKS5
+        slack-text: ${{ github.workflow }} успешно выполнен!
